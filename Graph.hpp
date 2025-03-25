@@ -1,6 +1,5 @@
-#ifndef GRAPH_HPP
+#ifndef GRAPH_HPP  // Prevent multiple inclusions
 #define GRAPH_HPP
-
 #include <iostream>
 
 class Graph {
@@ -15,11 +14,11 @@ private:
 public:
     Graph(int vertices);  // Constructor
     ~Graph();  // Destructor
-
+    int getNumVertices();
+    int getWeight(int u, int v);
     void addEdge(int u, int v, int weight);  // Add an edge
     void removeEdge(int u, int v);           // Remove an edge
     void print_graph() const;                    // Display the graph
     bool isEdge(int u, int v) const;         // Check if an edge exists
 };
-
-#endif // GRAPH_HPP
+#endif

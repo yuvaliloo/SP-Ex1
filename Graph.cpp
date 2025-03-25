@@ -84,3 +84,13 @@ void Graph::print_graph() const {
         std::cout << std::endl;
     }
 }
+
+int Graph::getNumVertices()
+{
+    return numVertices;
+}
+
+int Graph::getWeight(int u,int v)
+{
+    return weightMatrix[u][v];
+}
