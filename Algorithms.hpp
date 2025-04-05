@@ -4,13 +4,16 @@
 
 class Algorithms {
 private:
-    Graph& graph;  // Reference to original graph
+    Graph& graph;  // reference to original graph
     void DFSUtil(int vertex, bool visited[], Graph& dfsTree);
 
 public:
-    Algorithms(Graph& g);  // Constructor
+    Algorithms(Graph& g);  
 
-    Graph DFS(int start);  // Returns DFS tree as a Graph
-    Graph BFS(int start);  // Returns BFS tree as a Graph
+    Graph DFS(int start);  // returns DFS tree as a graph
+    Graph BFS(int start);  // returns BFS tree as a graph
+    Graph Dijkstra(int start); // returns a weighted tree based of shortest paths from starting vertex
+    Graph Kruskal(); // returns MST using kruskal's algorithm
+    Graph Prim(); // returns MST using prim's algorithm
 };
 

@@ -1,24 +1,22 @@
-# Compiler and Flags
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -I.  # -I. ensures it looks in the current directory
-
-# Executable
+CXXFLAGS = -Wall -Wextra -std=c++17 -I. -g
 TEST_TARGET = tests
-
-# Source Files
+MAIN_TARGET = main
 SRC = Graph.cpp Algorithms.cpp Queue.cpp
-OBJ = $(SRC:.cpp=.o)  # Converts .cpp files to .o files
+OBJ = $(SRC:.cpp=.o)
 TEST_SRC = Testing.cpp
-TEST_OBJ = $(TEST_SRC:.cpp=.o)  # Converts test sources to .o files
+TEST_OBJ = $(TEST_SRC:.cpp=.o)
+MAIN_SRC = main.cpp
+MAIN_OBJ = $(MAIN_SRC:.cpp=.o)
 
-# Doctest Header (included manually)
 DOCTEST_HEADER = doctest.hpp
 
-# Build Tests
 $(TEST_TARGET): $(OBJ) $(TEST_OBJ)
 	$(CXX) $(CXXFLAGS) -o $(TEST_TARGET) $(OBJ) $(TEST_OBJ)
 
-# Explicit Dependencies for Each File
+$(MAIN_TARGET): $(OBJ) $(MAIN_OBJ)
+	$(CXX) $(CXXFLAGS) -o $(MAIN_TARGET) $(OBJ) $(MAIN_OBJ)
+
 Graph.o: Graph.cpp Graph.hpp
 	$(CXX) $(CXXFLAGS) -c Graph.cpp -o Graph.o
 
@@ -31,13 +29,16 @@ Queue.o: Queue.cpp Queue.hpp
 Testing.o: Testing.cpp Queue.hpp Graph.hpp Algorithms.hpp doctest.hpp
 	$(CXX) $(CXXFLAGS) -c Testing.cpp -o Testing.o
 
-# Run Tests
+main.o: main.cpp Queue.hpp Graph.hpp Algorithms.hpp
+	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
+
+valgrind: $(TEST_TARGET)
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(TEST_TARGET)
+
 test: $(TEST_TARGET)
 	./$(TEST_TARGET)
 
-# Clean Build Files
 clean:
-	rm -f $(OBJ) $(TEST_OBJ) $(TEST_TARGET)
+	rm -f $(OBJ) $(TEST_OBJ) $(MAIN_OBJ) $(TEST_TARGET) $(MAIN_TARGET)
 
-# Rebuild Everything
-all: clean $(TEST_TARGET)
+all: clean $(TEST_TARGET) $(MAIN_TARGET)

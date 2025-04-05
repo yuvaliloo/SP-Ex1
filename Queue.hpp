@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+//simple implementaion of Queue data structure
 struct Node {
     int data;
     Node* next;
@@ -15,8 +16,8 @@ private:
     int size;
 
 public:
-    Queue();             // Constructor
-    ~Queue();            // Destructor
+    Queue();             
+    ~Queue();            
 
     void enqueue(int value);
     int dequeue();
@@ -24,4 +25,4 @@ public:
     bool isEmpty() const;
 };
 
-#endif // QUEUE_HPP
+#endif 
